@@ -181,14 +181,20 @@
         }
 
         .btn-primary {
-            background: var(--gradient-primary);
+            background: linear-gradient(30deg, #0400ff, #4ce3f7);
+            background-size: 100% auto;
             color: white;
             box-shadow: var(--shadow-md);
+            border: none;
+            transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
+            background-position: right center;
+            background-size: 200% auto;
             transform: translateY(-2px);
             box-shadow: var(--shadow-xl);
+            animation: pulse512 1.5s infinite;
         }
 
         /* Hero Section */
@@ -271,17 +277,24 @@
         }
 
         .btn-hero-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid white;
+            background: linear-gradient(30deg, #0400ff, #4ce3f7);
+            background-size: 100% auto;
+            color: white;
+            border: none;
         }
 
         .btn-hero-secondary:hover {
-            background: var(--gray-100);
+            background-position: right center;
+            background-size: 200% auto;
             transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: pulse512 1.5s infinite;
         }
-
+        @keyframes pulse512 {
+            0% { box-shadow: 0 0 0 0 #05bada66; }
+            70% { box-shadow: 0 0 0 10px rgb(218 103 68 / 0%); }
+            100% { box-shadow: 0 0 0 0 rgb(218 103 68 / 0%); }
+        }
         /* Features Section */
         .features {
             padding: 6rem 0;
