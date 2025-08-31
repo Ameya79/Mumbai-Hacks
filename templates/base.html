@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Famflow{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme + '/loader.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme + '/chatbot.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme + '/base.css') }}">
+    {% block head %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/tailwind.config.js') }}"></script>
+</head>
+<body class="bg-gray-50 dark:bg-[var(--bg-primary)] font-sans">
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg">
+        <i class="fas fa-bars text-gray-700"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-lg md:translate-x-0 z-40 transition-all duration-300">
+        <div class="p-4 flex items-center justify-between border-b border-gray-200">
+            <div class="flex items-center">
+                <i class="fas fa-wallet text-primary text-2xl mr-3"></i>
+                <h1 class="text-xl font-bold text-gray-800">Famflow</h1>
+            </div>
+            <button id="minimizeBtn" class="p-1 rounded-md hover:bg-gray-100 text-gray-500">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <nav class="mt-8 space-y-2">
+            <a href="{{ url_for('dashboard') }}" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                <i class="fas fa-home mr-3"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('reports') }}" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                <i class="fas fa-chart-bar mr-3"></i>
+                <span>Reports</span>
+            </a>
+            <a href="{{ url_for('transactions') }}" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition">
+                <i class="fas fa-exchange-alt mr-3"></i>
+                <span>Transactions</span>
+            </a>
+            <a href="{{ url_for('budgets') }}" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition">
+                <i class="fas fa-bullseye mr-3"></i>
+                <span>Budgets</span>
+            </a>
+            <a href="{{ url_for('savings') }}" class="flex items-center px-4 py-3 mt-1 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                <i class="fas fa-piggy-bank mr-3"></i>
+                <span>Savings</span>
+            </a>
+            <a href="{{ url_for('family_members') }}" class="flex items-center px-4 py-3 mt-1 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                <i class="fas fa-users mr-3"></i>
+                <span>Family Members</span>
+            </a>
+            <a href="{{ url_for('settings') }}" class="flex items-center px-4 py-3 mt-1 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                <i class="fas fa-cog mr-3"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div id="profile-link" class="absolute bottom-0 w-full p-4 border-t border-gray-200 cursor-pointer">
+            {% if 'user_id' in session %}
+            <div class="flex items-center">
+                <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&background=4f46e5&color=fff" class="w-10 h-10 rounded-full" alt="User">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-700">{{ current_user.name }}</p>
+                    <p class="text-xs text-gray-500">{{ current_user.email }}</p>
+                </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                <span>Logout</span>
+            </a>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                <i class="fas fa-sign-in-alt mr-3"></i>
+                <span>Login</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="md:ml-64 min-h-screen transition-all duration-300">
+        <div id="loader" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="hourglassBackground">
+              <div class="hourglassContainer">
+                <div class="hourglassCurves"></div>
+                <div class="hourglassCapTop"></div>
+                <div class="hourglassGlassTop"></div>
+                <div class="hourglassSand"></div>
+                <div class="hourglassSandStream"></div>
+                <div class="hourglassCapBottom"></div>
+                <div class="hourglassGlass"></div>
+              </div>
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Chatbot Button -->
+    <button id="chatbot-toggle" class="glass-fab fixed bottom-28 right-8 z-40">
+        <svg stroke="none" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799.5.948.948l.395-1.183A.75.75 0 0116.5 15z"></path>
+        </svg>
+        <span>AI</span>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div id="chatbot-window" class="fixed bottom-28 right-8 w-96 h-[70vh] bg-white rounded-lg shadow-lg hidden flex flex-col">
+        <div class="bg-primary text-white p-4 rounded-t-lg">
+            <h3 class="font-semibold">Chatbot</h3>
+        </div>
+        <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto"></div>
+        <div class="p-4 border-t">
+            <input type="text" id="chatbot-input" class="w-full border rounded-lg p-2" placeholder="Type a message...">
+            <button id="chatbot-send" class="mt-2 w-full bg-primary text-white py-2 rounded">Send</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

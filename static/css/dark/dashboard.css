@@ -1,0 +1,142 @@
+.dark .chart-container {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark #spendingChart {
+    filter: brightness(0.8) !important;
+}
+
+/* Dark Theme Chart Overrides */
+.dark .chart-container {
+    background: var(--bg-secondary) !important;
+}
+
+.dark #spendingChart {
+    filter: brightness(0.8) !important;
+}
+
+/* Dark Theme Text Colors - Improved Contrast */
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800 {
+    color: var(--text-primary) !important;
+}
+
+/* Recent Transactions */
+.dark .transaction-amount {
+    color: var(--text-primary) !important;
+}
+
+.dark .transaction-date {
+    color: var(--text-muted) !important;
+}
+
+.dark .transaction-negative {
+    color: var(--danger-text) !important;
+}
+
+/* Budget Categories */
+.dark .budget-category {
+    color: var(--text-primary) !important;
+}
+
+.dark .budget-amount {
+    color: var(--text-secondary) !important;
+}
+
+/* Savings Goals */
+.dark .savings-percentage {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+.dark .savings-label {
+    color: var(--text-secondary) !important;
+}
+
+.dark .savings-amount {
+    color: var(--text-muted) !important;
+}
+
+/* Progress Bars */
+.dark .progress-bar-label {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+}
+
+.dark .progress-bar-amount {
+    color: var(--text-secondary) !important;
+}
+
+/* View All & Add Goal Links */
+.dark .action-link {
+    color: var(--link-text) !important;
+    font-weight: 500;
+}
+
+.dark .action-link:hover {
+    opacity: 0.9;
+    text-decoration: underline;
+}
+
+/* Transaction List Styles */
+.dark .transaction-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.dark .transaction-title {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.dark .transaction-date {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+}
+
+.dark .transaction-amount {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.dark .transaction-amount.negative {
+    color: var(--accent-red);
+}
+
+.dark .transaction-amount.positive {
+    color: var(--accent-green);
+}
+
+/* Header and Links */
+.dark .section-header {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.dark .view-all-link {
+    color: var(--accent-blue);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.dark .view-all-link:hover {
+    text-decoration: underline;
+}
+
+.dark .progress-ring__percentage {
+    fill: var(--text-primary);
+}
+
+.dark .progress-ring__label {
+    fill: var(--text-secondary);
+}

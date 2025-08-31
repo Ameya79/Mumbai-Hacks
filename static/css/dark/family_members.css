@@ -1,0 +1,6 @@
+/* Add custom styles for the family members page here */
+
+.dark .bg-white {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}

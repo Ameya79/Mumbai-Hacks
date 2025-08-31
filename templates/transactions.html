@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions - Family Finance{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme + '/transactions.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-white dark:bg-[var(--bg-secondary)] shadow-sm dark:border-b dark:border-[var(--border-color)]">
+        <div class="px-6 py-4 flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-[var(--text-primary)]">Transactions</h2>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[var(--hover-bg)]">
+                        <i class="fas fa-bell text-gray-500 dark:text-[var(--text-tertiary)]"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-danger"></span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button id="userMenuButton" class="flex items-center space-x-2 focus:outline-none">
+                        <span class="hidden md:block text-sm font-medium dark:text-[var(--text-secondary)]">Family Admin</span>
+                        <img src="https://ui-avatars.com/api/?name=Family+User&background=4f46e5&color=fff" class="w-8 h-8 rounded-full" alt="User">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-[var(--text-primary)]">Transactions</h1>
+            <div class="flex gap-4">
+                <button id="addTransactionBtn" class="btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Add Transaction
+                </button>
+                <button id="uploadReceiptBtn" class="btn-secondary">
+                    <i class="fas fa-receipt mr-2"></i>Upload Receipt
+                </button>
+            </div>
+        </div>
+        <table class="transactions-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="transactionsBody">
+                <!-- Transactions will be loaded here by JS -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Add Transaction Modal -->
+    <div id="transactionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] rounded-xl w-full max-w-md mx-4">
+            <div class="p-4 border-b border-gray-200 dark:border-[var(--border-color)] flex justify-between items-center">
+                <h3 class="font-semibold text-lg dark:text-[var(--text-primary)]">Add Transaction</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:text-[var(--text-tertiary)] dark:hover:text-[var(--text-secondary)]">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <form id="transactionForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-[var(--text-secondary)] text-sm font-medium mb-2">Transaction Type</label>
+                        <div class="flex space-x-2">
+                            <button type="button" id="incomeBtn" class="flex-1 py-2 px-4 border rounded-lg font-medium focus:outline-none bg-secondary/10 text-secondary border-secondary">
+                                Income
+                            </button>
+                            <button type="button" id="expenseBtn" class="flex-1 py-2 px-4 border rounded-lg font-medium focus:outline-none border-gray-300 dark:border-[var(--border-color)] dark:text-[var(--text-secondary)]">
+                                Expense
+                            </button>
+                        </div>
+                        <input type="hidden" id="transactionType" value="income">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-[var(--text-secondary)] text-sm font-medium mb-2">Amount</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-[var(--text-tertiary)]">$</span>
+                            <input type="number" id="amount" class="w-full pl-8 pr-4 py-2 border border-gray-300 dark:border-[var(--border-color)] rounded-lg focus:outline-none focus:ring-1 focus:ring-primary dark:bg-[var(--bg-secondary)] dark:text-[var(--text-primary)]" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-[var(--text-secondary)] text-sm font-medium mb-2">Category</label>
+                        <select id="category" class="w-full px-4 py-2 border border-gray-300 dark:border-[var(--border-color)] rounded-lg focus:outline-none focus:ring-1 focus:ring-primary dark:bg-[var(--bg-secondary)] dark:text-[var(--text-primary)]" required>
+                            <option value="">Select a category</option>
+                            <option value="groceries">Groceries</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="salary">Salary</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-[var(--text-secondary)] text-sm font-medium mb-2">Date</label>
+                        <input type="date" id="date" class="w-full px-4 py-2 border border-gray-300 dark:border-[var(--border-color)] rounded-lg focus:outline-none focus:ring-1 focus:ring-primary dark:bg-[var(--bg-secondary)] dark:text-[var(--text-primary)]" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-[var(--text-secondary)] text-sm font-medium mb-2">Description</label>
+                        <textarea id="description" class="w-full px-4 py-2 border border-gray-300 dark:border-[var(--border-color)] rounded-lg focus:outline-none focus:ring-1 focus:ring-primary dark:bg-[var(--bg-secondary)] dark:text-[var(--text-primary)]" rows="2" placeholder="Optional notes"></textarea>
+                    </div>
+
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancelBtn" class="px-4 py-2 border border-gray-300 dark:border-[var(--border-color)] rounded-lg font-medium text-gray-700 dark:text-[var(--text-secondary)] hover:bg-gray-50 dark:hover:bg-[var(--hover-bg)]">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-indigo-600">
+                            Add Transaction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
+{% endblock %}

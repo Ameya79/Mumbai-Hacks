@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Family Finance Manager{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme + '/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-white dark:bg-[var(--bg-secondary)] shadow-sm dark:border-b dark:border-[var(--border-color)]">
+        <div class="px-6 py-4 flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-[var(--text-primary)]">Family Dashboard</h2>
+            <div class="flex items-center space-x-4">
+                <div class="relative" id="notifications">
+                    <button id="notifBtn" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[var(--hover-bg)] relative">
+                        <i class="fas fa-bell text-gray-500 dark:text-[var(--text-tertiary)]"></i>
+                        <span id="notifDot" class="absolute top-0 right-0 h-2 w-2 rounded-full bg-danger hidden"></span>
+                    </button>
+                    <div id="notifDropdown" class="absolute right-0 mt-2 w-80 bg-white dark:bg-[var(--card-bg)] border border-gray-200 dark:border-[var(--border-color)] rounded-lg shadow-lg hidden z-50">
+                        <div class="p-3 border-b border-gray-100 dark:border-[var(--border-color)]">
+                            <p class="font-semibold text-gray-700 dark:text-[var(--text-primary)]">Notifications</p>
+                        </div>
+                        <div id="notifList" class="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-[var(--border-color)]">
+                            <div class="p-4 text-sm text-gray-500">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="p-6">
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" data-summary-cards>
+            <!-- Example summary card -->
+            <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] p-6 rounded-xl shadow-sm">
+                <p class="text-sm font-medium text-gray-500 dark:text-[var(--text-tertiary)]">Total Balance</p>
+                <h3 class="text-2xl font-bold mt-1 dark:text-[var(--text-primary)] outline-none focus:ring-2 focus:ring-indigo-500 rounded" contenteditable="true" data-metric="totalBalance" data-editable-metric="totalBalance">$0.00</h3>
+                <p class="text-xs text-gray-400 mt-1">Click to edit</p>
+            </div>
+            <!-- Cards will be populated by JavaScript -->
+        </div>
+
+        <!-- Charts and Transactions -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-24">
+            <!-- Spending Chart -->
+            <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] p-6 rounded-xl shadow-sm lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold text-gray-800 dark:text-[var(--text-primary)]">Monthly Spending</h3>
+                    <select class="text-sm border border-gray-200 dark:border-[var(--border-color)] rounded-lg px-3 py-1 focus:outline-none dark:bg-[var(--bg-secondary)] dark:text-[var(--text-secondary)]">
+                        <option>This Month</option>
+                        <option>Last Month</option>
+                        <option>Last 3 Months</option>
+                        <option>This Year</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="spendingChart"></canvas>
+                    <p id="spendingChartEmpty" class="text-gray-500 mt-4 hidden">Enter data to show the analytics.</p>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] p-6 rounded-xl shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold text-gray-800 dark:text-[var(--text-primary)]">Recent Transactions</h3>
+                    <a href="{{ url_for('transactions') }}" class="text-sm text-primary font-medium dark:text-[var(--link-text)]">View All</a>
+                </div>
+                <div class="space-y-4" data-transactions-list>
+                    <!-- Transactions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Budgets and Savings -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Budget Progress -->
+            <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] p-6 rounded-xl shadow-sm lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold text-gray-800 dark:text-[var(--text-primary)]">Budget Categories</h3>
+                    <a href="{{ url_for('budgets') }}" class="text-sm text-primary font-medium dark:text-[var(--link-text)]">Manage Budgets</a>
+                </div>
+                
+                <div class="space-y-4" data-budget-list>
+                    <!-- Budget categories will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Savings Goals -->
+            <div class="bg-white dark:bg-[var(--card-bg)] dark:border dark:border-[var(--border-color)] p-6 rounded-xl shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold text-gray-800 dark:text-[var(--text-primary)]">Savings Goals</h3>
+                    <a href="{{ url_for('savings') }}" class="text-sm text-primary font-medium dark:text-[var(--link-text)]">Add Goal</a>
+                </div>
+                
+                <div class="space-y-3" data-savings-goals>
+                    <!-- Savings goals will be populated by JavaScript (shows empty-state when none) -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Transaction Button -->
+    <button class="floating-btn glass-fab fixed bottom-8 right-8 z-40" title="Add Transaction">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    
+
+    <!-- Add Transaction Modal -->
+    <div id="transactionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-md mx-4">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold text-lg">Add Transaction</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <form id="transactionForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Transaction Type</label>
+                        <div class="flex space-x-2">
+                            <button type="button" data-type="income" class="flex-1 py-2 px-4 border rounded-lg font-medium focus:outline-none bg-secondary/10 text-secondary border-secondary">
+                                Income
+                            </button>
+                            <button type="button" data-type="expense" class="flex-1 py-2 px-4 border rounded-lg font-medium focus:outline-none border-gray-300">
+                                Expense
+                            </button>
+                        </div>
+                        <input type="hidden" id="transactionType" name="type" value="income">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Amount</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
+                            <input type="number" id="amount" name="amount" class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Category</label>
+                        <select id="category" name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" required>
+                            <option value="">Select a category</option>
+                            <option value="groceries">Groceries</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="salary">Salary</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Date</label>
+                        <input type="date" id="date" name="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+                        <textarea id="description" name="description" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" rows="2" placeholder="Optional notes"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancelBtn" class="px-4 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-indigo-600">
+                            Add Transaction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

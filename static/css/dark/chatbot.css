@@ -1,0 +1,103 @@
+#chatbot-toggle {
+  --sz-btn: 68px;
+  --space: calc(var(--sz-btn) / 5.5);
+  --gen-sz: calc(var(--space) * 2);
+  --sz-text: calc(var(--sz-btn) - var(--gen-sz));
+  height: var(--sz-btn);
+  width: var(--sz-btn);
+  border: 1px solid transparent;
+  border-radius: 0.75rem; /* rounded-xl */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: fixed;
+  bottom: 2rem; /* bottom-8 */
+  right: 2rem; /* right-8 */
+  outline: 0;
+  box-shadow: #3c40434d 0 1px 2px 0, #3c404326 0 2px 6px 2px, #0000004d 0 30px 60px -30px, #34343459 0 -2px 6px 0 inset;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+}
+
+#chatbot-toggle:active {
+  transform: scale(0.95);
+}
+
+#chatbot-toggle svg {
+  position: absolute;
+  z-index: 10;
+  overflow: visible;
+  transition: all 0.3s;
+  color: white;
+  top: calc(var(--sz-text) / 7);
+  left: calc(var(--sz-text) / 7);
+  height: var(--gen-sz);
+  width: var(--gen-sz);
+  animation: pulse 1.5s infinite;
+}
+
+#chatbot-toggle:hover svg {
+  height: var(--sz-text);
+  width: var(--sz-text);
+  left: calc(var(--sz-text) / 4);
+  top: calc(var(--gen-sz) / 2);
+}
+
+#chatbot-toggle span {
+  font-size: var(--sz-text);
+  font-weight: 800; /* font-extrabold */
+  line-height: 1; /* leading-none */
+  color: white;
+  transition: all 0.2s;
+}
+
+#chatbot-toggle:hover span {
+  opacity: 0;
+}
+
+#chatbot-window {
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease-in-out;
+}
+
+#chatbot-messages {
+    background-color: #f9fafb;
+}
+
+#chatbot-input, #chatbot-messages input[type="text"] {
+    border: 1px solid #d1d5db;
+    color: #1f2937;
+}
+
+.edit-btn, .save-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+}
+
+.dark #chatbot-toggle {
+    background-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.dark #chatbot-window {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+}
+
+.dark #chatbot-messages {
+    background-color: var(--bg-primary);
+}
+
+.dark #chatbot-input, .dark #chatbot-messages input[type="text"] {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.dark .edit-btn, .dark .save-btn {
+    color: var(--text-tertiary);
+}

@@ -1,0 +1,14 @@
+/* Add custom styles for the savings page here */
+
+.dark .bg-white {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.dark .bg-gray-200 {
+    background-color: var(--bg-tertiary);
+}
+
+.dark .text-gray-600 {
+    color: var(--text-secondary);
+}

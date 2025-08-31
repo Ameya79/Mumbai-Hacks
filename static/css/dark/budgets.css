@@ -1,0 +1,14 @@
+/* Add any budget-specific styles here */
+
+.dark .budget-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.dark .bg-gray-200 {
+    background-color: var(--bg-tertiary);
+}
+
+.dark .text-gray-600 {
+    color: var(--text-secondary);
+}

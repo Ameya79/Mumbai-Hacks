@@ -1,0 +1,157 @@
+.dark .chart-container {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark #spendingChart {
+    filter: brightness(0.8) !important;
+}
+
+/* Dark Theme Chart Overrides */
+.dark .chart-container {
+    background: var(--bg-secondary) !important;
+}
+
+.dark #spendingChart {
+    filter: brightness(0.8) !important;
+}
+
+/* Dark Theme Text Colors - Improved Contrast */
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800 {
+    color: var(--text-primary) !important;
+}
+
+/* Recent Transactions */
+.dark .transaction-amount {
+    color: var(--text-primary) !important;
+}
+
+.dark .transaction-date {
+    color: var(--text-muted) !important;
+}
+
+/* Enhanced Dashboard Styles */
+.chart-container {
+    min-height: 300px;
+    position: relative;
+}
+
+.chart-container .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Glass theme */
+.glass-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+    border: 1px solid rgba(148,163,184,0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.dark .glass-card {
+    background: linear-gradient(180deg, rgba(18,22,32,0.65), rgba(18,22,32,0.45));
+    border-color: rgba(148,163,184,0.25);
+}
+
+/* Floating button / actions */
+.floating-btn {
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35);
+}
+.floating-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(79, 70, 229, 0.45);
+}
+
+/* Summary Cards */
+[data-summary-cards] .bg-white {
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+}
+[data-summary-cards] .bg-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Transaction Items */
+[data-transactions-list] .flex {
+    transition: all 0.2s ease;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+}
+[data-transactions-list] .flex:hover {
+    background-color: #f9fafb;
+}
+
+/* Budget Progress Bars */
+[data-budget-list] .mb-4 {
+    transition: all 0.3s ease;
+}
+[data-budget-list] .bg-secondary { background-color: #10b981 !important; }
+[data-budget-list] .bg-warning { background-color: #f59e0b !important; }
+[data-budget-list] .bg-danger { background-color: #ef4444 !important; }
+
+/* Savings Goals */
+[data-savings-goals] .bg-gray-50 {
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+}
+[data-savings-goals] .bg-gray-50:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* AI Chat Button polish */
+#chatbot-toggle {
+  border-radius: 1rem;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
+  box-shadow: 0 10px 24px rgba(2,6,23,0.12);
+}
+.dark #chatbot-toggle {
+  background: linear-gradient(180deg, rgba(18,22,32,0.85), rgba(18,22,32,0.65));
+  border-color: rgba(148,163,184,0.25);
+}
+#chatbot-toggle svg { color: white; }
+#chatbot-window { border-radius: 1rem; overflow: hidden; }
+
+/* Empty State Styling */
+.text-center.py-8 { color: #6b7280; }
+.text-center.py-8 i { opacity: 0.6; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    [data-summary-cards] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    [data-summary-cards] { grid-template-columns: 1fr; }
+}
+
+.dark .transaction-negative { color: var(--danger-text) !important; }
+.dark .budget-category { color: var(--text-primary) !important; }
+.dark .budget-amount { color: var(--text-secondary) !important; }
+.dark .savings-percentage { color: var(--text-primary) !important; font-weight: 600; }
+.dark .savings-label { color: var(--text-secondary) !important; }
+.dark .savings-amount { color: var(--text-muted) !important; }
+.dark .progress-bar-label { color: var(--text-primary) !important; font-weight: 500; }
+.dark .progress-bar-amount { color: var(--text-secondary) !important; }
+.dark .action-link { color: var(--link-text) !important; font-weight: 500; }
+.dark .action-link:hover { opacity: 0.9; text-decoration: underline; }
+.dark .transaction-item { background: var(--bg-secondary); border: 1px solid var(--bg-tertiary); padding: 1rem; margin-bottom: 0.5rem; border-radius: 0.75rem; }
+.dark .transaction-title { color: var(--text-primary); font-weight: 500; font-size: 1rem; }
+.dark .transaction-date { color: var(--text-tertiary); font-size: 0.875rem; }
+.dark .transaction-amount { font-weight: 600; font-size: 1rem; }
+.dark .transaction-amount.negative { color: var(--accent-red); }
+.dark .transaction-amount.positive { color: var(--accent-green); }
+.dark .section-header { color: var(--text-primary); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+.dark .view-all-link { color: var(--accent-blue); font-weight: 500; text-decoration: none; }
+.dark .view-all-link:hover { text-decoration: underline; }

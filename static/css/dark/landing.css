@@ -1,0 +1,96 @@
+:root {
+    --primary-color: #6d28d9;
+    --primary-dark-color: #5b21b6;
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+}
+
+.bg-primary-dark {
+    background-color: var(--primary-dark-color);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.hover\:text-primary:hover {
+    color: var(--primary-color);
+}
+
+.hover\:bg-primary-dark:hover {
+    background-color: var(--primary-dark-color);
+}
+
+.switch {
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f4f4f5;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    left: 0.3em;
+    bottom: 0.3em;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #252525;
+}
+
+input:checked + .slider:before {
+    transform: translateX(1.5em);
+}
+
+.slider .sun {
+    position: absolute;
+    top: 50%;
+    left: 0.4em;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: .4s;
+}
+
+.slider .moon {
+    position: absolute;
+    top: 50%;
+    right: 0.4em;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: .4s;
+}
+
+input:checked + .slider .sun {
+    opacity: 0;
+}
+
+input:checked + .slider .moon {
+    opacity: 1;
+}
